@@ -9,10 +9,10 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ToMoreRecentThenFromValidator.class)
-public @interface ToMoreRecentThenFrom {
+@Constraint(validatedBy = ToMoreRecentThanFromValidator.class)
+public @interface ToMoreRecentThanFrom {
 
-    String message() default "`to` should be more recent then `from`";
+    String message() default "`to` should be more recent than `from`";
 
     Class<?>[] groups() default {};
 
