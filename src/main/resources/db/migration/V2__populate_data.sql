@@ -3,10 +3,10 @@ VALUES (nextval('movies_seq'), 'The Shawshank Redemption', '2:22:00'),
        (nextval('movies_seq'), 'The Dark Knight', '2:32:00'),
        (nextval('movies_seq'), 'The Green Mile', '3:09:00');
 
-INSERT INTO multiplexes
-VALUES (nextval('multiplexes_seq'), 'Alfa'),
-       (nextval('multiplexes_seq'), 'Beta'),
-       (nextval('multiplexes_seq'), 'Gamma');
+INSERT INTO screening_rooms
+VALUES (nextval('screening_rooms_seq'), 'Alfa'),
+       (nextval('screening_rooms_seq'), 'Beta'),
+       (nextval('screening_rooms_seq'), 'Gamma');
 
 INSERT INTO seats
 VALUES (nextval('seats_seq'), 1, 1, 1),

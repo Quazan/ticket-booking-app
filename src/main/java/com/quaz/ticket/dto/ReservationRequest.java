@@ -1,5 +1,6 @@
 package com.quaz.ticket.dto;
 
+import com.quaz.ticket.validation.EqualNumberOfSeatsAndTickets;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -8,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 import java.io.Serializable;
 import java.util.List;
 
+@EqualNumberOfSeatsAndTickets
 public record ReservationRequest(
         @NotBlank
         @Length(min = 3)
