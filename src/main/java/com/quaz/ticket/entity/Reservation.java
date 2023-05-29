@@ -20,7 +20,7 @@ import java.util.List;
 public class Reservation extends AbstractPersistable<Long> {
 
     @Column(name = "creation_time", nullable = false)
-    private OffsetDateTime reservationTime = OffsetDateTime.now();
+    private OffsetDateTime reservationTime;
 
     @Column(name = "customer_name", nullable = false)
     private String customerName;

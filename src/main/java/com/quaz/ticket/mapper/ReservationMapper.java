@@ -17,10 +17,14 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.time.Clock;
 import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class ReservationMapper {
+
+    @Autowired
+    protected Clock clock;
 
     @Autowired
     private ScreeningSeatRepository screeningSeatRepository;
@@ -31,7 +35,7 @@ public abstract class ReservationMapper {
     @Autowired
     private TicketTypeRepository ticketTypeRepository;
 
-    @Mapping(target = "reservationTime", ignore = true)
+    @Mapping(target = "reservationTime", expression = "java(OffsetDateTime.now(clock))")
     @Mapping(target = "voucher", source = "voucherCode")
     public abstract Reservation toEntity(ReservationRequest reservationRequest);
 
