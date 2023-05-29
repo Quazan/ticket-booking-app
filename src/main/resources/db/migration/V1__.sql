@@ -1,8 +1,8 @@
 CREATE SEQUENCE IF NOT EXISTS movies_seq START WITH 1 INCREMENT BY 50;
 
-CREATE SEQUENCE IF NOT EXISTS multiplexes_seq START WITH 1 INCREMENT BY 50;
-
 CREATE SEQUENCE IF NOT EXISTS reservations_seq START WITH 1 INCREMENT BY 50;
+
+CREATE SEQUENCE IF NOT EXISTS screening_rooms_seq START WITH 1 INCREMENT BY 50;
 
 CREATE SEQUENCE IF NOT EXISTS screening_seats_seq START WITH 1 INCREMENT BY 50;
 
@@ -24,13 +24,6 @@ CREATE TABLE movies
     CONSTRAINT pk_movies PRIMARY KEY (id)
 );
 
-CREATE TABLE multiplexes
-(
-    id   BIGINT       NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    CONSTRAINT pk_multiplexes PRIMARY KEY (id)
-);
-
 CREATE TABLE reservations
 (
     id               BIGINT                      NOT NULL,
@@ -39,6 +32,13 @@ CREATE TABLE reservations
     customer_surname VARCHAR(255)                NOT NULL,
     voucher_id       BIGINT,
     CONSTRAINT pk_reservations PRIMARY KEY (id)
+);
+
+CREATE TABLE screening_rooms
+(
+    id   BIGINT       NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_screening_rooms PRIMARY KEY (id)
 );
 
 CREATE TABLE screening_seats
@@ -52,19 +52,19 @@ CREATE TABLE screening_seats
 
 CREATE TABLE screenings
 (
-    id             BIGINT                      NOT NULL,
-    movie_id       BIGINT                      NOT NULL,
-    multiplex_id   BIGINT                      NOT NULL,
-    screening_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    id                BIGINT                      NOT NULL,
+    movie_id          BIGINT                      NOT NULL,
+    screening_room_id BIGINT                      NOT NULL,
+    screening_time    TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     CONSTRAINT pk_screenings PRIMARY KEY (id)
 );
 
 CREATE TABLE seats
 (
-    id           BIGINT  NOT NULL,
-    multiplex_id BIGINT  NOT NULL,
-    row          INTEGER NOT NULL,
-    number       INTEGER NOT NULL,
+    id                BIGINT  NOT NULL,
+    screening_room_id BIGINT  NOT NULL,
+    row               INTEGER NOT NULL,
+    number            INTEGER NOT NULL,
     CONSTRAINT pk_seats PRIMARY KEY (id)
 );
 
@@ -100,7 +100,7 @@ ALTER TABLE screenings
     ADD CONSTRAINT FK_SCREENINGS_ON_MOVIE FOREIGN KEY (movie_id) REFERENCES movies (id);
 
 ALTER TABLE screenings
-    ADD CONSTRAINT FK_SCREENINGS_ON_MULTIPLEX FOREIGN KEY (multiplex_id) REFERENCES multiplexes (id);
+    ADD CONSTRAINT FK_SCREENINGS_ON_SCREENINGROOM FOREIGN KEY (screening_room_id) REFERENCES screening_rooms (id);
 
 ALTER TABLE screening_seats
     ADD CONSTRAINT FK_SCREENING_SEATS_ON_RESERVATION FOREIGN KEY (reservation_id) REFERENCES reservations (id);
@@ -112,7 +112,7 @@ ALTER TABLE screening_seats
     ADD CONSTRAINT FK_SCREENING_SEATS_ON_SEAT FOREIGN KEY (seat_id) REFERENCES seats (id);
 
 ALTER TABLE seats
-    ADD CONSTRAINT FK_SEATS_ON_MULTIPLEX FOREIGN KEY (multiplex_id) REFERENCES multiplexes (id);
+    ADD CONSTRAINT FK_SEATS_ON_SCREENINGROOM FOREIGN KEY (screening_room_id) REFERENCES screening_rooms (id);
 
 ALTER TABLE tickets
     ADD CONSTRAINT FK_TICKETS_ON_RESERVATION FOREIGN KEY (reservation_id) REFERENCES reservations (id);

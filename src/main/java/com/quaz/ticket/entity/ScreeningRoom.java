@@ -10,8 +10,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Getter
 @Setter
 @Entity
-@Table(name = "multiplexes")
-public class Multiplex extends AbstractPersistable<Long> {
+@Table(name = "screening_rooms")
+public class ScreeningRoom extends AbstractPersistable<Long> {
 
     @Column(name = "name", nullable = false)
     private String name;

@@ -8,7 +8,7 @@ import java.util.List;
 public record ScreeningDetails(
         Long id,
         MovieResponse movie,
-        MultiplexResponse multiplex,
+        ScreeningRoomResponse screeningRoom,
         List<ScreeningSeatEmbeddedResponse> seats,
         OffsetDateTime screeningTime
 ) implements Serializable {

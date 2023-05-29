@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {MovieMapper.class, MultiplexMapper.class, ScreeningSeatMapper.class})
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {MovieMapper.class, ScreeningRoomMapper.class, ScreeningSeatMapper.class})
 public interface ScreeningMapper {
 
     @Mapping(target = "movieTitle", source = "movie.title")

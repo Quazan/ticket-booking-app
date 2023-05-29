@@ -23,7 +23,7 @@ public class Screening extends AbstractPersistable<Long> {
     private Movie movie;
 
     @ManyToOne(optional = false)
-    private Multiplex multiplex;
+    private ScreeningRoom screeningRoom;
 
     @Column(name = "screening_time", nullable = false)
     private OffsetDateTime screeningTime;

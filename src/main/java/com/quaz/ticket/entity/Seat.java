@@ -15,7 +15,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Seat extends AbstractPersistable<Long> {
 
     @ManyToOne(optional = false)
-    private Multiplex multiplex;
+    private ScreeningRoom screeningRoom;
 
     @Column(name = "row", nullable = false)
     private Integer row;
