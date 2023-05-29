@@ -1,24 +1,21 @@
 package com.quaz.ticket.dto;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * DTO for {@link com.quaz.ticket.entity.Reservation}
- */
 public record ReservationRequest(
         @NotBlank
-        @Min(3)
-        @Pattern(regexp = "^[A-Z][a-z]{2,}")
+        @Length(min = 3)
+        @Pattern(regexp = "^\\p{Lu}\\p{Ll}{2,}")
         String customerName,
         @NotBlank
-        @Min(3)
-        @Pattern(regexp = "^[A-Z][a-z]{2,}(-[A-Z][a-z]{2,})?$")
+        @Length(min = 3)
+        @Pattern(regexp = "^\\p{Lu}\\p{Ll}{2,}(-\\p{Lu}\\p{Ll}{2,})?$")
         String customerSurname,
         String voucherCode,
         @NotNull
