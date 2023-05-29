@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -24,6 +25,12 @@ public class Voucher extends AbstractPersistable<Long> {
     private VoucherType type;
 
     @Column(name = "amount", nullable = false)
-    private Integer amount;
+    private BigDecimal amount;
 
+    public BigDecimal apply(BigDecimal totalPrice) {
+        return switch (type) {
+            case PERCENTAGE -> totalPrice.multiply(amount.divide(new BigDecimal(100)));
+            case AMOUNT -> totalPrice.subtract(amount);
+        };
+    }
 }

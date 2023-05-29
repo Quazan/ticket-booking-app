@@ -70,9 +70,10 @@ CREATE TABLE seats
 
 CREATE TABLE ticket_types
 (
-    id    BIGINT       NOT NULL,
-    name  VARCHAR(255) NOT NULL,
-    price DECIMAL      NOT NULL,
+    id            BIGINT       NOT NULL,
+    name          VARCHAR(255) NOT NULL,
+    regular_price DECIMAL      NOT NULL,
+    weekend_price DECIMAL      NOT NULL,
     CONSTRAINT pk_ticket_types PRIMARY KEY (id)
 );
 

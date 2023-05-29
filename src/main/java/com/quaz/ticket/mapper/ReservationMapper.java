@@ -2,7 +2,7 @@ package com.quaz.ticket.mapper;
 
 import com.quaz.ticket.dto.ReservationRequest;
 import com.quaz.ticket.dto.ReservationResponse;
-import com.quaz.ticket.dto.TicketDto;
+import com.quaz.ticket.dto.TicketRequest;
 import com.quaz.ticket.entity.Reservation;
 import com.quaz.ticket.entity.ScreeningSeat;
 import com.quaz.ticket.entity.Ticket;
@@ -44,6 +44,11 @@ public abstract class ReservationMapper {
         reservation.getTickets().forEach(ticket -> ticket.setReservation(reservation));
     }
 
+    @AfterMapping
+    void linkSeats(@MappingTarget Reservation reservation) {
+        reservation.getReservedSeats().forEach(seat -> seat.setReservation(reservation));
+    }
+
     List<Long> reservedSeatsToReservedSeatIds(List<ScreeningSeat> reservedSeats) {
         return reservedSeats.stream().map(ScreeningSeat::getId).toList();
     }
@@ -60,7 +65,7 @@ public abstract class ReservationMapper {
 
     @Mapping(source = "ticketTypeId", target = "ticketType")
     @Mapping(target = "reservation", ignore = true)
-    abstract Ticket toTicket(TicketDto ticketDto);
+    abstract Ticket toTicket(TicketRequest ticketRequest);
 
     TicketType ticketTypeIdToTicketType(Long id) {
         return ticketTypeRepository.findById(id).orElseThrow();

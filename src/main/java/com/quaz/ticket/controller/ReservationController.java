@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -37,7 +38,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ReservationResponse createReservation(@Valid ReservationRequest reservationRequest) {
+    public ReservationResponse createReservation(@RequestBody @Valid ReservationRequest reservationRequest) {
         return reservationMapper.toResponse(reservationService.createReservation(reservationMapper.toEntity(reservationRequest)));
     }
 

@@ -25,7 +25,7 @@ public record ReservationRequest(
         List<Long> reservedSeats,
         @NotNull
         @Size(min = 1)
-        List<TicketDto> tickets
+        List<TicketRequest> tickets
 ) implements Serializable {
 
 }

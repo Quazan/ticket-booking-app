@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-
 public record ScreeningDetails(
         Long id,
         MovieResponse movie,
