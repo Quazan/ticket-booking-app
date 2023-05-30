@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Getter
 @Setter
@@ -29,7 +30,7 @@ public class Voucher extends AbstractPersistable<Long> {
 
     public BigDecimal apply(BigDecimal totalPrice) {
         return switch (type) {
-            case PERCENTAGE -> totalPrice.multiply(amount.divide(new BigDecimal(100)));
+            case PERCENTAGE -> totalPrice.multiply(amount).divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
             case AMOUNT -> totalPrice.subtract(amount);
         };
     }

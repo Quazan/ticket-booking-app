@@ -3,16 +3,18 @@ package com.quaz.ticket.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.SATURDAY;
+import static java.time.DayOfWeek.SUNDAY;
+import static java.time.ZoneOffset.UTC;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.math.BigDecimal;
-import java.time.Clock;
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Set;
 
 @Getter
@@ -30,18 +32,17 @@ public class TicketType extends AbstractPersistable<Long> {
     @Column(name = "weekend_price", nullable = false)
     private BigDecimal weekendPrice;
 
-    public BigDecimal getCurrentPrice(Clock clock) {
-        OffsetDateTime currentDateTime = OffsetDateTime.now(clock);
-        DayOfWeek dayOfWeek = currentDateTime.getDayOfWeek();
+    public BigDecimal getPrice(OffsetDateTime currentDateTime) {
+        final var dayOfWeek = currentDateTime.getDayOfWeek();
 
-        if (Set.of(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(dayOfWeek)) {
-            OffsetDateTime startDateTime = currentDateTime.with(TemporalAdjusters.previousOrSame(DayOfWeek.FRIDAY))
+        if (Set.of(FRIDAY, SATURDAY, SUNDAY).contains(dayOfWeek)) {
+            final var startDateTime = currentDateTime.with(previousOrSame(FRIDAY))
                     .with(LocalTime.of(14, 0))
-                    .withOffsetSameInstant(ZoneOffset.UTC);
+                    .withOffsetSameInstant(UTC);
 
-            OffsetDateTime endDateTime = currentDateTime.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+            final var endDateTime = currentDateTime.with(nextOrSame(SUNDAY))
                     .with(LocalTime.of(23, 0))
-                    .withOffsetSameInstant(ZoneOffset.UTC);
+                    .withOffsetSameInstant(UTC);
 
             if (currentDateTime.isAfter(startDateTime) && currentDateTime.isBefore(endDateTime)) {
                 return weekendPrice;

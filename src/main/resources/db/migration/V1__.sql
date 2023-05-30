@@ -31,6 +31,7 @@ CREATE TABLE reservations
     customer_name    VARCHAR(255)                NOT NULL,
     customer_surname VARCHAR(255)                NOT NULL,
     voucher_id       BIGINT,
+    total_price      DECIMAL                     NOT NULL,
     CONSTRAINT pk_reservations PRIMARY KEY (id)
 );
 
@@ -90,7 +91,7 @@ CREATE TABLE vouchers
     id     BIGINT       NOT NULL,
     code   VARCHAR(255) NOT NULL,
     type   VARCHAR(255) NOT NULL,
-    amount INTEGER      NOT NULL,
+    amount DECIMAL      NOT NULL,
     CONSTRAINT pk_vouchers PRIMARY KEY (id)
 );
 

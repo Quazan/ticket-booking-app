@@ -17,6 +17,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.math.BigDecimal;
 import java.time.Clock;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public abstract class ReservationMapper {
 
     @Mapping(target = "reservationTime", expression = "java(OffsetDateTime.now(clock))")
     @Mapping(target = "voucher", source = "voucherCode")
+    @Mapping(target = "totalPrice", ignore = true)
     public abstract Reservation toEntity(ReservationRequest reservationRequest);
 
     @AfterMapping
@@ -49,8 +51,17 @@ public abstract class ReservationMapper {
         reservation.getReservedSeats().forEach(seat -> seat.setReservation(reservation));
     }
 
-    List<Long> reservedSeatsToReservedSeatIds(List<ScreeningSeat> reservedSeats) {
-        return reservedSeats.stream().map(ScreeningSeat::getId).toList();
+    @AfterMapping
+    void setTotalPrice(@MappingTarget Reservation reservation) {
+        final var price = reservation.getTickets().stream()
+                .map(ticket -> ticket.getPrice(reservation.getReservationTime()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        final var totalPrice = reservation.getVoucher()
+                .map(voucher -> voucher.apply(price))
+                .orElse(price);
+
+        reservation.setTotalPrice(totalPrice);
     }
 
     List<ScreeningSeat> mapScreeningSeatIds(List<Long> value) {

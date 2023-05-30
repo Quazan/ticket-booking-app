@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -32,10 +33,17 @@ public class Reservation extends AbstractPersistable<Long> {
     @ManyToOne
     private Voucher voucher;
 
+    @Column(name = "total_price", nullable = false)
+    private BigDecimal totalPrice;
+
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
     private List<ScreeningSeat> reservedSeats = new ArrayList<>();
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
     private List<Ticket> tickets = new ArrayList<>();
+
+    public Optional<Voucher> getVoucher() {
+        return Optional.ofNullable(voucher);
+    }
 
 }
