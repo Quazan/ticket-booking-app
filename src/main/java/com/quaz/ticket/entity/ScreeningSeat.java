@@ -22,7 +22,7 @@ public class ScreeningSeat extends AbstractPersistable<Long> {
     @ManyToOne
     private Reservation reservation;
 
-    public Boolean isAvailable() {
+    public boolean isAvailable() {
         return reservation == null;
     }
 

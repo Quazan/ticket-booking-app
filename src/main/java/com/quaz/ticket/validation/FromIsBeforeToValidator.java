@@ -4,7 +4,7 @@ import com.quaz.ticket.dto.TimeRange;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class ToMoreRecentThanFromValidator implements ConstraintValidator<ToMoreRecentThanFrom, TimeRange> {
+public class FromIsBeforeToValidator implements ConstraintValidator<FromIsBeforeTo, TimeRange> {
 
     @Override
     public boolean isValid(TimeRange value, ConstraintValidatorContext context) {

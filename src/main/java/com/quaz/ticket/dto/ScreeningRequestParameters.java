@@ -1,13 +1,13 @@
 package com.quaz.ticket.dto;
 
-import com.quaz.ticket.validation.ToMoreRecentThanFrom;
+import com.quaz.ticket.validation.FromIsBeforeTo;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.OffsetDateTime;
 
-@ToMoreRecentThanFrom
+@FromIsBeforeTo
 public record ScreeningRequestParameters(
         @FutureOrPresent
         @NotNull
@@ -16,7 +16,8 @@ public record ScreeningRequestParameters(
         @Future
         @NotNull
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-        OffsetDateTime to) implements TimeRange {
+        OffsetDateTime to
+) implements TimeRange {
 
 }
 

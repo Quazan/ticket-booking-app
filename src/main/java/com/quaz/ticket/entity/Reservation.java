@@ -21,6 +21,9 @@ import java.util.Optional;
 @Table(name = "reservations")
 public class Reservation extends AbstractPersistable<Long> {
 
+    @ManyToOne(optional = false)
+    private Screening screening;
+
     @Column(name = "creation_time", nullable = false)
     private OffsetDateTime reservationTime;
 
