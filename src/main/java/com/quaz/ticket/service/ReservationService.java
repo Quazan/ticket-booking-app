@@ -46,9 +46,10 @@ public class ReservationService {
             for (var screeningSeat : screeningSeats) {
                 if (!screeningSeat.isAvailable()) {
                     foundReserved = true;
-                } else if (screeningSeat.isAvailable() && foundReserved) {
+                } else if (foundReserved) {
                     foundEndOfReserved = true;
-                } else if (!screeningSeat.isAvailable() && foundEndOfReserved) {
+                }
+                if (!screeningSeat.isAvailable() && foundEndOfReserved) {
                     throw new IllegalArgumentException("Reservation should not leave empty places in rows");
                 }
             }
