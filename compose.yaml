@@ -6,12 +6,12 @@ services:
     environment:
       - POSTGRES_DB=ticket
       - POSTGRES_USER=postgres
-      - POSTGRES_HOST=spring-postgres
+      - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_PASSWORD=ticket123
     networks:
       - spring-postgres
-  db:
+  postgres:
     image: postgres
     restart: always
     networks:
