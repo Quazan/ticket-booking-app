@@ -81,7 +81,7 @@ public abstract class ReservationMapper {
 
     @Mapping(source = "ticketTypeId", target = "ticketType")
     @Mapping(target = "reservation", ignore = true)
-    abstract Ticket toTicket(TicketRequest ticketRequest);
+    abstract Ticket toTickets(TicketRequest ticketRequests);
 
     TicketType ticketTypeIdToTicketType(Long id) {
         return ticketTypeRepository.findById(id).orElseThrow();

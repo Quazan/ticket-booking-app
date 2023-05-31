@@ -1,6 +1,7 @@
 package com.quaz.ticket.validation;
 
 import com.quaz.ticket.dto.ReservationRequest;
+import com.quaz.ticket.dto.TicketRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -8,6 +9,9 @@ public class EqualNumberOfSeatsAndTicketsValidator implements ConstraintValidato
 
     @Override
     public boolean isValid(ReservationRequest value, ConstraintValidatorContext context) {
-        return value.tickets().size() == value.reservedSeats().size();
+        if (value.tickets() == null || value.reservedSeatIds() == null) {
+            return false;
+        }
+        return value.tickets().stream().mapToInt(TicketRequest::count).sum() == value.reservedSeatIds().size();
     }
 }
