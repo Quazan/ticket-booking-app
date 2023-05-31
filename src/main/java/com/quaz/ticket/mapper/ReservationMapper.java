@@ -55,7 +55,7 @@ public abstract class ReservationMapper {
     @AfterMapping
     void setTotalPrice(@MappingTarget Reservation reservation) {
         final var price = reservation.getTickets().stream()
-                .map(ticket -> ticket.getPrice(reservation.getReservationTime()))
+                .map(ticket -> ticket.getPrice(reservation.getScreening().getScreeningTime()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         final var totalPrice = reservation.getVoucher()
