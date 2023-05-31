@@ -27,6 +27,7 @@ CREATE TABLE movies
 CREATE TABLE reservations
 (
     id               BIGINT                      NOT NULL,
+    screening_id     BIGINT                      NOT NULL,
     creation_time    TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     customer_name    VARCHAR(255)                NOT NULL,
     customer_surname VARCHAR(255)                NOT NULL,
@@ -94,6 +95,9 @@ CREATE TABLE vouchers
     amount DECIMAL      NOT NULL,
     CONSTRAINT pk_vouchers PRIMARY KEY (id)
 );
+
+ALTER TABLE reservations
+    ADD CONSTRAINT FK_RESERVATIONS_ON_SCREENING FOREIGN KEY (screening_id) REFERENCES screenings (id);
 
 ALTER TABLE reservations
     ADD CONSTRAINT FK_RESERVATIONS_ON_VOUCHER FOREIGN KEY (voucher_id) REFERENCES vouchers (id);

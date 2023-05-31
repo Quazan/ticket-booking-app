@@ -2,20 +2,21 @@ package com.quaz.ticket.controller;
 
 import com.quaz.ticket.dto.ScreeningDetails;
 import com.quaz.ticket.dto.ScreeningListRecord;
-import com.quaz.ticket.dto.ScreeningRequestParameters;
 import com.quaz.ticket.mapper.ScreeningMapper;
 import com.quaz.ticket.service.ScreeningServiceImpl;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/screenings")
+@RequestMapping(value = "/screenings", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class ScreeningController {
 
@@ -24,8 +25,10 @@ public class ScreeningController {
     private final ScreeningMapper screeningMapper;
 
     @GetMapping
-    public List<ScreeningListRecord> listScreenings(@RequestParam @Valid ScreeningRequestParameters requestParameters) {
-        return screeningService.listByScreeningTime(requestParameters.from(), requestParameters.to()).stream()
+    public List<ScreeningListRecord> listScreenings(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) OffsetDateTime from,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) OffsetDateTime to) {
+        return screeningService.listByScreeningTime(from, to).stream()
                 .map(screeningMapper::toListRecord)
                 .toList();
     }

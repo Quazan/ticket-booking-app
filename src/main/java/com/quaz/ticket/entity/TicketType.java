@@ -32,8 +32,6 @@ public class TicketType extends AbstractPersistable<Long> {
     @Column(name = "weekend_price", nullable = false)
     private BigDecimal weekendPrice;
 
-    //TODO create ADULT_WEEKEND type
-
     public BigDecimal getPrice(OffsetDateTime currentDateTime) {
         final var dayOfWeek = currentDateTime.getDayOfWeek();
 

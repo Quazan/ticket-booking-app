@@ -11,6 +11,8 @@ import java.util.List;
 
 @EqualNumberOfSeatsAndTickets
 public record ReservationRequest(
+        @NotNull
+        Long screeningId,
         @NotBlank
         @Length(min = 3)
         @Pattern(regexp = "^\\p{Lu}\\p{Ll}{2,}")

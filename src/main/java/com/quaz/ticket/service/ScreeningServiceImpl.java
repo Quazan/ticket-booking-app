@@ -16,6 +16,9 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     @Override
     public List<Screening> listByScreeningTime(OffsetDateTime from, OffsetDateTime to) {
+        if (from.isAfter(to)) {
+            throw new IllegalArgumentException("From date must be before to date");
+        }
         return screeningRepository.findByScreeningTimeBetween(from, to);
     }
 

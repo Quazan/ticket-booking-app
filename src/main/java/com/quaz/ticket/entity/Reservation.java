@@ -39,7 +39,7 @@ public class Reservation extends AbstractPersistable<Long> {
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;
 
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reservation")
     private List<ScreeningSeat> reservedSeats = new ArrayList<>();
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
