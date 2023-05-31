@@ -81,9 +81,10 @@ CREATE TABLE ticket_types
 
 CREATE TABLE tickets
 (
-    id             BIGINT NOT NULL,
-    reservation_id BIGINT NOT NULL,
-    ticket_type_id BIGINT NOT NULL,
+    id             BIGINT  NOT NULL,
+    count          INTEGER NOT NULL,
+    reservation_id BIGINT  NOT NULL,
+    ticket_type_id BIGINT  NOT NULL,
     CONSTRAINT pk_tickets PRIMARY KEY (id)
 );
 
