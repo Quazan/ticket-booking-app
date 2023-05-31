@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class ReservationMapper {
@@ -45,6 +46,7 @@ public abstract class ReservationMapper {
     @Mapping(target = "voucher", source = "voucherCode")
     @Mapping(target = "totalPrice", ignore = true)
     @Mapping(target = "screening", source = "screeningId")
+    @Mapping(target = "reservedSeats", source = "reservedSeatIds")
     public abstract Reservation toEntity(ReservationRequest reservationRequest);
 
     @AfterMapping
@@ -69,7 +71,7 @@ public abstract class ReservationMapper {
         return screeningRepository.findById(screeningId).orElseThrow();
     }
 
-    List<ScreeningSeat> mapScreeningSeatIds(List<Long> value) {
+    List<ScreeningSeat> mapScreeningSeatIds(Set<Long> value) {
         return screeningSeatRepository.findAllById(value);
     }
 
