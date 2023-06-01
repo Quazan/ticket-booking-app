@@ -1,7 +1,7 @@
 package com.quaz.ticket.validation;
 
-import com.quaz.ticket.dto.ReservationRequest;
-import com.quaz.ticket.dto.TicketRequest;
+import com.quaz.ticket.reservation.ReservationRequest;
+import com.quaz.ticket.reservation.TicketRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
