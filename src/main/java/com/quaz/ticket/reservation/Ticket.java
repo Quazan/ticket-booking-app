@@ -1,5 +1,6 @@
 package com.quaz.ticket.reservation;
 
+import com.quaz.ticket.persistence.AbstractEntity;
 import com.quaz.ticket.tickettype.TicketType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,7 +8,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 @Setter
 @Entity
 @Table(name = "tickets")
-public class Ticket extends AbstractPersistable<Long> {
+public class Ticket extends AbstractEntity<Long> {
 
     @Column(name = "count", nullable = false)
     private Integer count;

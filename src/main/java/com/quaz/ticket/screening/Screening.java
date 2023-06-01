@@ -1,8 +1,9 @@
 package com.quaz.ticket.screening;
 
+import com.quaz.ticket.movie.Movie;
+import com.quaz.ticket.persistence.AbstractEntity;
 import com.quaz.ticket.screeningroom.ScreeningRoom;
 import com.quaz.ticket.screeningseat.ScreeningSeat;
-import com.quaz.ticket.movie.Movie;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +12,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "screenings")
-public class Screening extends AbstractPersistable<Long> {
+public class Screening extends AbstractEntity<Long> {
 
     @ManyToOne(optional = false)
     private Movie movie;

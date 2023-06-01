@@ -1,5 +1,6 @@
 package com.quaz.ticket.voucher;
 
+import com.quaz.ticket.persistence.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,15 +8,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "vouchers")
-public class Voucher extends AbstractPersistable<Long> {
+public class Voucher extends AbstractEntity<Long> {
 
     @Column(name = "code", nullable = false)
     private String code;
@@ -29,8 +28,13 @@ public class Voucher extends AbstractPersistable<Long> {
 
     public BigDecimal apply(BigDecimal totalPrice) {
         return switch (type) {
-            case PERCENTAGE -> totalPrice.multiply(amount).divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
-            case AMOUNT -> totalPrice.subtract(amount);
+            case PERCENTAGE -> calculatePercentage(totalPrice);
+            case AMOUNT -> totalPrice.subtract(amount.max(BigDecimal.ZERO)).max(BigDecimal.ZERO);
         };
+    }
+
+    private BigDecimal calculatePercentage(BigDecimal totalPrice) {
+        final var pct = BigDecimal.valueOf(100).subtract(amount.min(BigDecimal.valueOf(100).max(BigDecimal.ZERO)));
+        return totalPrice.multiply(pct).scaleByPowerOfTen(-2);
     }
 }

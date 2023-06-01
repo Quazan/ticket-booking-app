@@ -1,12 +1,12 @@
 package com.quaz.ticket.screeningroom;
 
+import com.quaz.ticket.persistence.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "screening_rooms")
-public class ScreeningRoom extends AbstractPersistable<Long> {
+public class ScreeningRoom extends AbstractEntity<Long> {
 
     @Column(name = "name", nullable = false)
     private String name;

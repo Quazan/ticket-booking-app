@@ -1,5 +1,6 @@
 package com.quaz.ticket.reservation;
 
+import com.quaz.ticket.persistence.AbstractEntity;
 import com.quaz.ticket.screening.Screening;
 import com.quaz.ticket.screeningseat.ScreeningSeat;
 import com.quaz.ticket.voucher.Voucher;
@@ -11,7 +12,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.Optional;
 @Setter
 @Entity
 @Table(name = "reservations")
-public class Reservation extends AbstractPersistable<Long> {
+public class Reservation extends AbstractEntity<Long> {
 
     @ManyToOne(optional = false)
     private Screening screening;

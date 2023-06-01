@@ -1,5 +1,6 @@
 package com.quaz.ticket.tickettype;
 
+import com.quaz.ticket.persistence.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -11,7 +12,6 @@ import static java.time.temporal.TemporalAdjusters.nextOrSame;
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
@@ -21,7 +21,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "ticket_types")
-public class TicketType extends AbstractPersistable<Long> {
+public class TicketType extends AbstractEntity<Long> {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -44,7 +44,7 @@ public class TicketType extends AbstractPersistable<Long> {
                     .with(LocalTime.of(23, 0))
                     .withOffsetSameInstant(UTC);
 
-            if (currentDateTime.isAfter(startDateTime) && currentDateTime.isBefore(endDateTime)) {
+            if (currentDateTime.isEqual(startDateTime) || (currentDateTime.isAfter(startDateTime) && currentDateTime.isBefore(endDateTime))) {
                 return weekendPrice;
             }
         }

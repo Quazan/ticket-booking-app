@@ -72,9 +72,7 @@ public abstract class ReservationMapper {
     }
 
     Voucher mapVoucherCodeToVoucher(String voucherCode) {
-        return voucherRepository.findByCodeLike(voucherCode).stream()
-                .findFirst()
-                .orElse(null);
+        return voucherRepository.findFirstByCodeLike(voucherCode);
     }
 
     @Mapping(source = "ticketTypeId", target = "ticketType")
