@@ -1,5 +1,6 @@
 package com.quaz.ticket.reservation;
 
+import com.quaz.ticket.exception.EntityNotFoundException;
 import com.quaz.ticket.screeningseat.ScreeningSeatMapper;
 import com.quaz.ticket.screening.Screening;
 import com.quaz.ticket.screeningseat.ScreeningSeat;
@@ -38,6 +39,7 @@ public abstract class ReservationMapper {
     @Autowired
     private TicketTypeRepository ticketTypeRepository;
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "reservationTime", expression = "java(OffsetDateTime.now(clock))")
     @Mapping(target = "voucher", source = "voucherCode")
     @Mapping(target = "totalPrice", ignore = true)
@@ -64,7 +66,8 @@ public abstract class ReservationMapper {
     }
 
     Screening mapScreeningId(Long screeningId) {
-        return screeningRepository.findById(screeningId).orElseThrow();
+        return screeningRepository.findById(screeningId)
+                .orElseThrow(() -> new EntityNotFoundException(Screening.class, screeningId));
     }
 
     List<ScreeningSeat> mapScreeningSeatIds(Set<Long> value) {
@@ -75,12 +78,14 @@ public abstract class ReservationMapper {
         return voucherRepository.findFirstByCodeLike(voucherCode);
     }
 
-    @Mapping(source = "ticketTypeId", target = "ticketType")
+    @Mapping(target = "ticketType", source = "ticketTypeId")
     @Mapping(target = "reservation", ignore = true)
+    @Mapping(target = "id", ignore = true)
     abstract Ticket toTickets(TicketRequest ticketRequests);
 
     TicketType ticketTypeIdToTicketType(Long id) {
-        return ticketTypeRepository.findById(id).orElseThrow();
+        return ticketTypeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(TicketType.class, id));
     }
 
     public abstract ReservationResponse toResponse(Reservation reservation);

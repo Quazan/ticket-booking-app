@@ -26,15 +26,20 @@ public class Voucher extends AbstractEntity<Long> {
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    public BigDecimal apply(BigDecimal totalPrice) {
+    public BigDecimal apply(BigDecimal currentPrice) {
         return switch (type) {
-            case PERCENTAGE -> calculatePercentage(totalPrice);
-            case AMOUNT -> totalPrice.subtract(amount.max(BigDecimal.ZERO)).max(BigDecimal.ZERO);
+            case PERCENTAGE -> calculatePercentage(currentPrice);
+            case AMOUNT -> calculateAmount(currentPrice);
         };
     }
 
-    private BigDecimal calculatePercentage(BigDecimal totalPrice) {
+    private BigDecimal calculatePercentage(BigDecimal currentPrice) {
         final var pct = BigDecimal.valueOf(100).subtract(amount.min(BigDecimal.valueOf(100).max(BigDecimal.ZERO)));
-        return totalPrice.multiply(pct).scaleByPowerOfTen(-2);
+        return currentPrice.multiply(pct).scaleByPowerOfTen(-2);
     }
+
+    private BigDecimal calculateAmount(BigDecimal currentPrice) {
+        return currentPrice.subtract(amount.max(BigDecimal.ZERO)).max(BigDecimal.ZERO);
+    }
+
 }
