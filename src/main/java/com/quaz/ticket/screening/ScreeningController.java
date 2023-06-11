@@ -22,6 +22,13 @@ public class ScreeningController {
 
     private final ScreeningMapper screeningMapper;
 
+    @GetMapping("/all")
+    public List<ScreeningListRecord> listAllScreenings() {
+        return screeningService.listAll().stream()
+                .map(screeningMapper::toListRecord)
+                .toList();
+    }
+
     @GetMapping
     public List<ScreeningListRecord> listScreenings(
             @RequestParam @DateTimeFormat(iso = DATE) OffsetDateTime from,

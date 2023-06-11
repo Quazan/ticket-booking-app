@@ -10,4 +10,5 @@ public interface ScreeningService {
 
     Optional<Screening> getById(Long id);
 
+    List<Screening> listAll();
 }

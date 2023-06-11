@@ -1,4 +1,4 @@
-package com.quaz.ticket.screeningseat;
+package com.quaz.ticket.screening;
 
 import java.io.Serializable;
 

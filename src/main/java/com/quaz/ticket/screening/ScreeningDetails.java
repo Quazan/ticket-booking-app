@@ -1,6 +1,5 @@
 package com.quaz.ticket.screening;
 
-import com.quaz.ticket.screeningseat.ScreeningSeatEmbeddedResponse;
 import com.quaz.ticket.movie.MovieResponse;
 import java.io.Serializable;
 import java.time.OffsetDateTime;

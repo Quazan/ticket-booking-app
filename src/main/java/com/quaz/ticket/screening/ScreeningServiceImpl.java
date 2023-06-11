@@ -25,4 +25,9 @@ class ScreeningServiceImpl implements ScreeningService {
         return screeningRepository.findById(id);
     }
 
+    @Override
+    public List<Screening> listAll() {
+        return screeningRepository.findAll();
+    }
+
 }

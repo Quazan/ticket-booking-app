@@ -1,14 +1,13 @@
 package com.quaz.ticket.reservation;
 
 import com.quaz.ticket.exception.EntityNotFoundException;
-import com.quaz.ticket.screeningseat.ScreeningSeatMapper;
 import com.quaz.ticket.screening.Screening;
-import com.quaz.ticket.screeningseat.ScreeningSeat;
-import com.quaz.ticket.tickettype.TicketType;
-import com.quaz.ticket.voucher.Voucher;
 import com.quaz.ticket.screening.ScreeningRepository;
+import com.quaz.ticket.screeningseat.ScreeningSeat;
 import com.quaz.ticket.screeningseat.ScreeningSeatRepository;
+import com.quaz.ticket.tickettype.TicketType;
 import com.quaz.ticket.tickettype.TicketTypeRepository;
+import com.quaz.ticket.voucher.Voucher;
 import com.quaz.ticket.voucher.VoucherRepository;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -21,7 +20,7 @@ import java.time.Clock;
 import java.util.List;
 import java.util.Set;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {ScreeningSeatMapper.class})
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class ReservationMapper {
 
     @Autowired
@@ -93,6 +92,10 @@ public abstract class ReservationMapper {
         return ticketTypeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(TicketType.class, id));
     }
+
+    @Mapping(target = "row", source = "seat.row")
+    @Mapping(target = "seatNumber", source = "seat.number")
+    protected abstract ScreeningSeatReservationEmbeddedResponse toScreeningSeatReservationEmbeddedResponse(ScreeningSeat screeningSeat);
 
     public abstract ReservationResponse toResponse(Reservation reservation);
 
