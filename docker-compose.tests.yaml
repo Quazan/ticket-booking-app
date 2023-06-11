@@ -1,0 +1,13 @@
+services:
+  tests:
+    image: maven:3.9.2-eclipse-temurin-17-focal
+    stop_signal: SIGKILL
+    stdin_open: true
+    tty: true
+    working_dir: $PWD
+    environment:
+      - TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal
+    volumes:
+      - $PWD:$PWD
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: mvn test
