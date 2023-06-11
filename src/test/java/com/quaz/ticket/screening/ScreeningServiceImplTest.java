@@ -29,9 +29,10 @@ class ScreeningServiceImplTest {
         final var to = OffsetDateTime.MIN;
 
         //when
-        final var thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            screeningService.listByScreeningTime(from, to);
-        });
+        final var thrown = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> screeningService.listByScreeningTime(from, to)
+        );
 
         //then
         Assertions.assertEquals("From date must be before to date", thrown.getMessage());

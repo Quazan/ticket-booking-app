@@ -42,6 +42,9 @@ public class Reservation extends AbstractEntity<Long> {
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;
 
+    @Column(name = "expiration_time", nullable = false)
+    private OffsetDateTime expirationTime;
+
     @OneToMany(mappedBy = "reservation")
     private List<ScreeningSeat> reservedSeats = new ArrayList<>();
 

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,6 +16,11 @@ class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ScreeningSeatRepository screeningSeatRepository;
+
+    @Override
+    public Optional<Reservation> getReservation(Long id) {
+        return reservationRepository.findById(id);
+    }
 
     @Override
     public Reservation createReservation(Reservation reservation) {

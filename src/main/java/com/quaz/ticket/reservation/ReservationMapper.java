@@ -41,6 +41,7 @@ public abstract class ReservationMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "reservationTime", expression = "java(OffsetDateTime.now(clock))")
+    @Mapping(target = "expirationTime", ignore = true)
     @Mapping(target = "voucher", source = "voucherCode")
     @Mapping(target = "totalPrice", ignore = true)
     @Mapping(target = "screening", source = "screeningId")
@@ -48,12 +49,17 @@ public abstract class ReservationMapper {
     public abstract Reservation toEntity(ReservationRequest reservationRequest);
 
     @AfterMapping
-    void linkTickets(@MappingTarget Reservation reservation) {
+    protected void setExpirationTime(@MappingTarget Reservation reservation) {
+        reservation.setExpirationTime(reservation.getScreening().getScreeningTime());
+    }
+
+    @AfterMapping
+    protected void linkTickets(@MappingTarget Reservation reservation) {
         reservation.getTickets().forEach(ticket -> ticket.setReservation(reservation));
     }
 
     @AfterMapping
-    void setTotalPrice(@MappingTarget Reservation reservation) {
+    protected void setTotalPrice(@MappingTarget Reservation reservation) {
         final var price = reservation.getTickets().stream()
                 .map(ticket -> ticket.getPrice(reservation.getScreening().getScreeningTime()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -65,25 +71,25 @@ public abstract class ReservationMapper {
         reservation.setTotalPrice(totalPrice);
     }
 
-    Screening mapScreeningId(Long screeningId) {
+    protected Screening mapScreeningId(Long screeningId) {
         return screeningRepository.findById(screeningId)
                 .orElseThrow(() -> new EntityNotFoundException(Screening.class, screeningId));
     }
 
-    List<ScreeningSeat> mapScreeningSeatIds(Set<Long> value) {
+    protected List<ScreeningSeat> mapScreeningSeatIds(Set<Long> value) {
         return screeningSeatRepository.findAllById(value);
     }
 
-    Voucher mapVoucherCodeToVoucher(String voucherCode) {
+    protected Voucher mapVoucherCodeToVoucher(String voucherCode) {
         return voucherRepository.findFirstByCodeLike(voucherCode);
     }
 
     @Mapping(target = "ticketType", source = "ticketTypeId")
     @Mapping(target = "reservation", ignore = true)
     @Mapping(target = "id", ignore = true)
-    abstract Ticket toTickets(TicketRequest ticketRequests);
+    protected abstract Ticket toTickets(TicketRequest ticketRequests);
 
-    TicketType ticketTypeIdToTicketType(Long id) {
+    protected TicketType ticketTypeIdToTicketType(Long id) {
         return ticketTypeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(TicketType.class, id));
     }

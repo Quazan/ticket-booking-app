@@ -18,7 +18,7 @@ services:
       start_period: 5s
       timeout: 10s
   postgres:
-    image: postgres
+    image: postgres:15.3
     restart: always
     networks:
       - spring-postgres

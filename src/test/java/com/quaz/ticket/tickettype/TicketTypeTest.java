@@ -1,5 +1,6 @@
 package com.quaz.ticket.tickettype;
 
+import com.quaz.ticket.configuration.TestConfig;
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.SATURDAY;
 import static java.time.DayOfWeek.SUNDAY;
@@ -10,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 class TicketTypeTest {
 
@@ -23,7 +22,7 @@ class TicketTypeTest {
         ticketType.setRegularPrice(BigDecimal.valueOf(100));
         ticketType.setWeekendPrice(BigDecimal.valueOf(200));
 
-        final var notWeekendDate  = OffsetDateTime.of(2023, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC).with(nextOrSame(THURSDAY))
+        final var notWeekendDate = TestConfig.fixedClock().instant().atOffset(UTC).with(nextOrSame(THURSDAY))
                 .with(LocalTime.of(13, 0))
                 .withOffsetSameInstant(UTC);
         //when
@@ -41,7 +40,7 @@ class TicketTypeTest {
         ticketType.setRegularPrice(BigDecimal.valueOf(100));
         ticketType.setWeekendPrice(BigDecimal.valueOf(200));
 
-        final var weekendDate  = OffsetDateTime.of(2023, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC).with(nextOrSame(SATURDAY))
+        final var weekendDate = TestConfig.fixedClock().instant().atOffset(UTC).with(nextOrSame(SATURDAY))
                .with(LocalTime.of(13, 0))
                .withOffsetSameInstant(UTC);
         //when
@@ -59,7 +58,7 @@ class TicketTypeTest {
         ticketType.setRegularPrice(BigDecimal.valueOf(100));
         ticketType.setWeekendPrice(BigDecimal.valueOf(200));
 
-        final var weekendDate  = OffsetDateTime.of(2023, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC).with(nextOrSame(FRIDAY))
+        final var weekendDate = TestConfig.fixedClock().instant().atOffset(UTC).with(nextOrSame(FRIDAY))
                 .with(LocalTime.of(14, 0))
                 .withOffsetSameInstant(UTC);
         //when
@@ -77,7 +76,7 @@ class TicketTypeTest {
         ticketType.setRegularPrice(BigDecimal.valueOf(100));
         ticketType.setWeekendPrice(BigDecimal.valueOf(200));
 
-        final var weekendDate  = OffsetDateTime.of(2023, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC).with(nextOrSame(SUNDAY))
+        final var weekendDate = TestConfig.fixedClock().instant().atOffset(UTC).with(nextOrSame(SUNDAY))
                 .with(LocalTime.of(23, 0))
                 .withOffsetSameInstant(UTC);
         //when

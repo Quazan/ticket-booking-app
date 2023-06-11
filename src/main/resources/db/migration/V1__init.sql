@@ -33,6 +33,7 @@ CREATE TABLE reservations
     customer_surname VARCHAR(255)                NOT NULL,
     voucher_id       BIGINT,
     total_price      DECIMAL                     NOT NULL,
+    expiration_time  TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     CONSTRAINT pk_reservations PRIMARY KEY (id)
 );
 

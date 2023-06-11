@@ -1,15 +1,14 @@
 package com.quaz.ticket.reservation;
 
+import com.quaz.ticket.configuration.TestConfig;
 import com.quaz.ticket.tickettype.TicketType;
 import static java.time.DayOfWeek.THURSDAY;
 import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.TemporalAdjusters.nextOrSame;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 class TicketTest {
 
@@ -25,7 +24,7 @@ class TicketTest {
         ticket.setCount(4);
         ticket.setTicketType(ticketType);
 
-        final var notWeekendDate  = OffsetDateTime.of(2023, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC).with(nextOrSame(THURSDAY))
+        final var notWeekendDate = TestConfig.fixedClock().instant().atOffset(UTC).with(nextOrSame(THURSDAY))
                 .with(LocalTime.of(13, 0))
                 .withOffsetSameInstant(UTC);
 
@@ -48,7 +47,7 @@ class TicketTest {
         ticket.setCount(0);
         ticket.setTicketType(ticketType);
 
-        final var notWeekendDate  = OffsetDateTime.of(2023, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC).with(nextOrSame(THURSDAY))
+        final var notWeekendDate = TestConfig.fixedClock().instant().atOffset(UTC).with(nextOrSame(THURSDAY))
                 .with(LocalTime.of(13, 0))
                 .withOffsetSameInstant(UTC);
 

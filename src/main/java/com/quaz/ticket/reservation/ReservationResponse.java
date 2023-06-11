@@ -9,10 +9,11 @@ import java.util.List;
 public record ReservationResponse(
         Long id,
         OffsetDateTime reservationTime,
+        OffsetDateTime expirationTime,
         String customerName,
         String customerSurname,
         BigDecimal totalPrice,
-        List<ScreeningSeatEmbeddedResponse> reservedSeats //Add new response
+        List<ScreeningSeatEmbeddedResponse> reservedSeats
 ) implements Serializable {
 
 }

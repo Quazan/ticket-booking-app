@@ -20,7 +20,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+            HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         final var body = new RestErrorBody(ex.getMessage());
         return handleExceptionInternal(ex, body, headers, status, request);
     }
