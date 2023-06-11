@@ -1,6 +1,9 @@
 # Ticket booking app
 ## Seat reservation system for a multiplex
 
+Implemented additional requirements: Different ticket prices
+
+
 ### How to build
 
 Project uses docker compose to build containers with backend and database.
