@@ -21,7 +21,7 @@ docker compose down
 To run provided test suits use docker compose (make sure you are in root directory of the project)
 
 ```bash
-docker compose -f docker-compose.tests.yaml run --rm services
+docker compose -f docker-compose.tests.yaml run --rm tests
 ```
 
 ### Demo
