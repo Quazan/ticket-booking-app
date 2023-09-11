@@ -1,0 +1,33 @@
+services:
+  backend:
+    build: ./
+    ports:
+      - 8080:8080
+    environment:
+      - POSTGRES_DB=ticket
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_PASSWORD=ticket123
+    networks:
+      - spring-postgres
+    healthcheck:
+      test: "curl --fail http://localhost:8080/actuator/health"
+      interval: 10s
+      retries: 5
+      start_period: 5s
+      timeout: 10s
+  postgres:
+    image: postgres:15.3
+    restart: always
+    networks:
+      - spring-postgres
+    environment:
+      - POSTGRES_PASSWORD=ticket123
+      - POSTGRES_DB=ticket
+      - POSTGRES_USER=postgres
+    ports:
+      - 5432:5432
+
+networks:
+  spring-postgres:
